@@ -1,0 +1,52 @@
+body {
+    background: url("../images/christmas-background.gif");
+    overflow: hidden;
+    color: white;
+}
+.header {
+    text-align: center;
+    height: 150px;
+    font-size: 40px;
+    background: green;
+    background: rgba(76, 175, 80, 0.45);
+}
+.badjoke {
+    font-size: 25px;
+}
+.gameBody {
+    margin-top: 20px;
+    text-align: center;
+    width: 60%;
+    background: red;
+    height: 500px;
+    background: rgba(226, 23, 23, 0.45);
+}
+.gameBodyHeader {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.timer {
+    font-size: 20px;
+}
+.question-box {
+    background: green;
+    background: rgba(6, 122, 41, 0.8);
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 10px;
+    height: 200px;
+}
+.question {
+    font-size: 30px;
+    margin-top: 30px;
+}
+.choices {
+    font-size: 15px;
+    margin-right: 30%;
+}
+footer {
+    font-size: 10px;
+    text-align: center;
+}
