@@ -11,6 +11,7 @@
 
 // I WANT TO DISPLAY EACH QUESTION, AND THEN OVERWRITE THE TEXT WITH A TIMER.
 // THAT WILL BE THE EASIEST WAY TO CHANGE THE QUESTION EACH TIME
+// "select#foo option:checked"
 
 $(document).ready(function () {
 
@@ -47,8 +48,8 @@ $(document).ready(function () {
     var numGen = Math.floor((Math.random() * 4) + 1)
 
     function question1() {
-        $('#demo').html("test");
-        console.log("test");
+        $("#q1").html(" test");
+        $("#demo").val("test");
     }
 
     function question2() {
