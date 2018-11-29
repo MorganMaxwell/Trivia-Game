@@ -17,54 +17,83 @@ $(document).ready(function () {
 
     var data = {
         question1: [
-            "question",
+            "question1",
             "test1",
-            "test2",
-            "test3",
-            "test4"
+            "test1",
+            "test1",
+            "test1"
         ],
         question2: [
-            "question",
-            "test",
-            "test",
-            "test",
-            "test"
+            "question2",
+            "test2",
+            "test2",
+            "test2",
+            "test2"
         ],
         question3: [
-            "question",
-            "test",
-            "test",
-            "test",
-            "test"
+            "question3",
+            "test3",
+            "test3",
+            "test3",
+            "test3"
         ],
         question4: [
-            "question",
-            "test",
-            "test",
-            "test",
-            "test"
+            "question4",
+            "test4",
+            "test4",
+            "test4",
+            "test4"
         ]
     };
-    var numGen = Math.floor((Math.random() * 4) + 1)
+    var startCounter = 5;
+    $(".actualTimer").text(startCounter);
 
-    function question1() {
-        $("#q1").html(" test");
-        $("#demo").val("test");
-    }
 
-    function question2() {
-        var question2 = data.question2;
-    }
+    function setQuestion1() {
+        $(".question").text(data.question1[0]);
+        $(".q1").text(data.question1[1]);
+        $(".q2").text(data.question1[2]);
+        $(".q3").text(data.question1[3]);
+        $(".q4").text(data.question1[4]);
+    };
 
-    function question3() {
-        var question3 = data.question3;
-    }
+    function setQuestion2() {
+        $(".question").text(data.question2[0]);
+        $(".q1").text(data.question2[1]);
+        $(".q2").text(data.question2[2]);
+        $(".q3").text(data.question2[3]);
+        $(".q4").text(data.question2[4]);
+    };
 
-    function question4() {
-        var question4 = data.question4;
-    }
+    function setQuestion3() {
+        $(".question").text(data.question3[0]);
+        $(".q1").text(data.question3[1]);
+        $(".q2").text(data.question3[2]);
+        $(".q3").text(data.question3[3]);
+        $(".q4").text(data.question3[4]);
+    };
 
-    question1();
+    function setQuestion4() {
+        $(".question").text(data.question4[0]);
+        $(".q1").text(data.question4[1]);
+        $(".q2").text(data.question4[2]);
+        $(".q3").text(data.question4[3]);
+        $(".q4").text(data.question4[4]);
+    };
+
+    function startTimer() {
+        setInterval(timerCounter, 1000);
+        setTimeout(function () {
+            setQuestion1();
+        }, 5000);
+    };
+
+    function timerCounter() {
+        startCounter--;
+        $(".actualTimer").text(startCounter);
+    };
+
+    $("#startButton").on("click", startTimer);
 
 
 });
