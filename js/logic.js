@@ -160,7 +160,7 @@ console.log(integer);
     // this is to set a function to run every second
     function gameTimer() {
         if (timerOn == false) {
-            intervalId = setInterval(timer, 100);
+            intervalId = setInterval(timer, 1000);
             timerOn = true;
         };
     };
