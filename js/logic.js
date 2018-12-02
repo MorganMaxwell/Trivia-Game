@@ -23,50 +23,92 @@ $(document).ready(function () {
     //variables block
     var data = {
         question1: [
-            "question1",
-            "test1",
-            "test1",
-            "test1",
-            "test1"
+            "What is Santa's 4th reindeer?",
+            "Vixen",
+            "Comet",
+            "Rudolph",
+            "Dasher"
         ],
         question2: [
-            "question2",
-            "test2",
-            "test2",
-            "test2",
-            "test2"
+            "What was Rudolph's dad's name?",
+            "Dancer",
+            "Mitzi",
+            "Blitzen",
+            "John Deer"
         ],
         question3: [
-            "question3",
-            "test3",
-            "test3",
-            "test3",
-            "test3"
+            "What color were Scott Farkus' eyes in 'A Christmas Story?'",
+            "Yellow",
+            "Green",
+            "Blue",
+            "Black"
         ],
         question4: [
-            "question4",
-            "test4",
-            "test4",
-            "test4",
-            "test4"
+            "How long does it take to grow a Christmas tree?",
+            "1-3 years",
+            "3-5 years",
+            "5-10 years",
+            "10-20 years"
         ],
-        // startData: [
-        //     "Get ready! You will have 10 seconds to answer each question",
-        //     "Answer1",
-        //     "Answer2",
-        //     "Answer3",
-        //     "Answer4"
-        // ]
+        question5: [
+            "When did flashing lights on Christmas debut?",
+            "1850s",
+            "1910s",
+            "1930s",
+            "1950s"
+        ],
+        question6: [
+            "What is the pop. of Santa Claus, Indiana?",
+            "Under 1000",
+            "Over 10,000",
+            "5,000",
+            "2,000"
+        ],
+        question7: [
+            "What is a reindeer's favorite food in the wild?",
+            "Grass",
+            "Lichen",
+            "Pine cones",
+            "Other reindeer",
+        ],
+        question8: [
+            "Can wild turkeys fly?",
+            "Yes",
+            "No",
+            "Yes, for short distances",
+            "Definitely not",
+        ],
+        question9: [
+            "When are 'The Twelve Days Of Christmas?'",
+            "December 1-12",
+            "December 14-25",
+            "December 25-January 5",
+            "July 4-16"
+        ],
+        question10: [
+            "How many spirits visit Scrooge in 'A Christmas Carol?'",
+            "4",
+            "3",
+            "5",
+            "2.5"
+        ],
+        startData: [
+            "Get ready! You will have 10 seconds to answer each question",
+            "Answer1",
+            "Answer2",
+            "Answer3",
+            "Answer4"
+        ]
     };
     var timerCounter = 10;
     var intervalId;
     var timerOn = false;
     var userGuesses = [];
-    var correctAnswers = [1, 3, 1, 4];
-    var correctGuesses = 0;
-    var wrongGuesses = 0
+    var correctAnswers = [1, 3, 1, 3, 3, 4, 2, 1, 3, 1];
+    // var correctGuesses = 0;
+    // var wrongGuesses = 0;
 
-
+    $(".actualTimer").text(timerCounter);
     // questionPicker block
     function setQuestion1() {
         // printing the information from data to the page
@@ -109,11 +151,11 @@ $(document).ready(function () {
         $(".q4").text(data.startData[4]);
     };
     // I'm hoping this will work and compare the user guesses to correct answers
-    // but it will probably break if they click a radio button before the game starts
-
     function endGame() {
         for (var i = 0; i < userGuesses; i++) {
             var j = 0;
+            var correctGuesses = 0;
+            var wrongGuesses = 0;
             if (userGuesses[i] == correctAnswers[j]) {
                 correctGuesses++;
             }
@@ -125,23 +167,32 @@ $(document).ready(function () {
     };
     //start the game
     function startGame() {
-        var questionCount = [setQuestion1(), setQuestion2(), setQuestion3(), setQuestion4()];
-        // for each thing in questionCount, run a timer
-        $.each(questionCount, gameTimer());
+        var questionCount = {
+            question1: setQuestion1(),
+            question2: setQuestion2(),
+            question3: setQuestion3(),
+            question4: setQuestion4(),
+        };
+        for (var i=0; i < questionCount.length; i++) {
+            gameTimer(questionCount[i]);
+        };
         endGame();
-    }
+    };
     // this is to run the timer for 10 seconds each question, and to gather user
     // input at the end of those 10 seconds
     function gameTimer() {
-        intervalId = setInterval(timerPrinter, 1000);
+        if (timerOn == false) {
+            intervalId = setInterval(timerPrinter, 1000);
+            timerOn = true;
+        };
+    };
+    // this is to actually print the timer numbers to the screen
+    function timerPrinter() {
+        $(".actualTimer").text(timerCounter);
+        timerCounter--;
         setTimeout(function () {
             dataGrab();
         }, 10000);
-    }
-    // this is to actually print the timer numbers to the screen
-    function timerPrinter() {
-        $("#actualTimer").text(timerCounter);
-        timerCounter--;
     };
     // this is to gather user data for each question
     function dataGrab() {
