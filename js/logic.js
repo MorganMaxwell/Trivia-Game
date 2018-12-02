@@ -160,7 +160,7 @@ console.log(integer);
     // this is to set a function to run every second
     function gameTimer() {
         if (timerOn == false) {
-            intervalId = setInterval(timer, 1000);
+            intervalId = setInterval(timer, 100);
             timerOn = true;
         };
     };
@@ -235,7 +235,7 @@ console.log(integer);
         // gather user data before displaying answer, to make sure they can't switch
         timerCounter = 4;
         showingAnswer = true;
-        $(".answer").text(answerCheck);
+        $(".answer").text("The right answer was: " + answerCheck);
         // TODO check if their answer was correct, and print out either correct or incorrect
     };
     // click events
