@@ -20,6 +20,8 @@
 // to print correct answers, empty the div at the end of the timer
 // and reprint the answer with a 
 
+// ^please ignore all of that, that's my horrible thought processes throughout the week
+
 
 $(document).ready(function () {
     var text = '42px';
@@ -112,8 +114,11 @@ console.log(integer);
     var correctAnswers = [1, 3, 1, 3, 3, 4, 2, 1, 3, 1];
     var questionCounter = 0;
     var showingAnswer = false;
-    var userGuess = $(':radio[name=answers]').val();
-    var userGuessInterger = parseInt(userGuess, 10);
+            // I absolutely cannot figure out why this is giving NaN, and 
+        // when I take off that :checked, it doesn't update the variable if
+        // you change what button is clicked
+    var userGuess = $(':radio[name=answers]:checked').val();
+    // var UserGuess = parseInt(userGuess, 10);
     var answersRight = 0;
     var answersWrong = 0;
 
@@ -124,6 +129,7 @@ console.log(integer);
         timerOn = false;
         $(".actualTimer").text(timerCounter);
         $(".answer").empty();
+        $('.rightORWrong').empty();
     }
 
     function displayQuestion(questionData) {
@@ -141,6 +147,7 @@ console.log(integer);
         clearInterval(intervalId);
         timerOn = false;
         $(".answer").text('game done');
+        $(".rightORWrong").text("You got: " + answersRight + " Right " + "And: " + answersWrong + " Wrong!")
     }
     //start the game
     function startGame() {
@@ -179,7 +186,10 @@ console.log(integer);
     };
     // this is to gather user data for each question
     function dataGrab() {
-        userGuess = $(':radio[name=answers]').val();
+        // I absolutely cannot figure out why this is giving NaN, and 
+        // when I take off that :checked, it doesn't update the variable if
+        // you change what button is clicked
+        userGuess = $(':radio[name=answers]:checked').val();
     };
     function startNewQuestion() {
         showingAnswer = false;
@@ -208,19 +218,22 @@ console.log(integer);
         // $(".question-box").empty();
         dataGrab();
         console.log(answerIndex);
-        console.log(userGuessInterger);
-        if (userGuessInterger === answerIndex) {
+        console.log(userGuess);
+        // I know it's bad practice to use 2 equals signs instead of 3, but it's the only
+        // thing that's making this work. I'm begging for feedback on this, because
+        // I spent 4 hours figuring out how to get this to tell me 1 == 1
+        if (userGuess == answerIndex) {
             $(".rightORWrong").text("You guessed Right!");
             answersRight++;
             console.log("right: " + answersRight);
         }
-        else if (userGuessInterger !== answerIndex) {
+        else if (userGuess !== answerIndex) {
             $(".rightORWrong").text("You guessed Wrong!");
             answersWrong++;
             console.log("wrong: " + answersWrong);
         };
         // gather user data before displaying answer, to make sure they can't switch
-        timerCounter = 300;
+        timerCounter = 4;
         showingAnswer = true;
         $(".answer").text(answerCheck);
         // TODO check if their answer was correct, and print out either correct or incorrect
