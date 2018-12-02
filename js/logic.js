@@ -17,192 +17,215 @@
 // make an array with all the answers, and compare the user guess to
 // it at each point. 
 
+// to print correct answers, empty the div at the end of the timer
+// and reprint the answer with a 
+
 
 $(document).ready(function () {
+    var text = '42px';
+var integer = parseInt(text, 10);
+console.log(integer);
 
     //variables block
-    var data = {
-        question1: [
+    var data = [
+        [
             "What is Santa's 4th reindeer?",
             "Vixen",
             "Comet",
             "Rudolph",
             "Dasher"
         ],
-        question2: [
+        [
             "What was Rudolph's dad's name?",
             "Dancer",
             "Mitzi",
             "Blitzen",
             "John Deer"
         ],
-        question3: [
+        [
             "What color were Scott Farkus' eyes in 'A Christmas Story?'",
             "Yellow",
             "Green",
             "Blue",
             "Black"
         ],
-        question4: [
+        [
             "How long does it take to grow a Christmas tree?",
             "1-3 years",
             "3-5 years",
             "5-10 years",
             "10-20 years"
         ],
-        question5: [
+        [
             "When did flashing lights on Christmas debut?",
             "1850s",
             "1910s",
             "1930s",
             "1950s"
         ],
-        question6: [
+        [
             "What is the pop. of Santa Claus, Indiana?",
             "Under 1000",
             "Over 10,000",
             "5,000",
             "2,000"
         ],
-        question7: [
+        [
             "What is a reindeer's favorite food in the wild?",
             "Grass",
             "Lichen",
             "Pine cones",
             "Other reindeer",
         ],
-        question8: [
+        [
             "Can wild turkeys fly?",
             "Yes",
             "No",
             "Yes, for short distances",
             "Definitely not",
         ],
-        question9: [
+        [
             "When are 'The Twelve Days Of Christmas?'",
             "December 1-12",
             "December 14-25",
             "December 25-January 5",
             "July 4-16"
         ],
-        question10: [
+        [
             "How many spirits visit Scrooge in 'A Christmas Carol?'",
             "4",
             "3",
             "5",
             "2.5"
-        ],
-        startData: [
-            "Get ready! You will have 10 seconds to answer each question",
-            "Answer1",
-            "Answer2",
-            "Answer3",
-            "Answer4"
-        ]
-    };
+        ]];
+
+    var startData = [
+        "Get ready! You will have 10 seconds to answer each question",
+        "Answer1",
+        "Answer2",
+        "Answer3",
+        "Answer4"
+    ];
     var timerCounter = 10;
     var intervalId;
     var timerOn = false;
-    var userGuesses = [];
     var correctAnswers = [1, 3, 1, 3, 3, 4, 2, 1, 3, 1];
-    // var correctGuesses = 0;
-    // var wrongGuesses = 0;
+    var questionCounter = 0;
+    var showingAnswer = false;
+    var userGuess = $(':radio[name=answers]').val();
+    var userGuessInterger = parseInt(userGuess, 10);
+    var answersRight = 0;
+    var answersWrong = 0;
 
-    $(".actualTimer").text(timerCounter);
-    // questionPicker block
-    function setQuestion1() {
-        // printing the information from data to the page
-        $(".question").text(data.question1[0]);
-        $(".q1").text(data.question1[1]);
-        $(".q2").text(data.question1[2]);
-        $(".q3").text(data.question1[3]);
-        $(".q4").text(data.question1[4]);
-    };
-    function setQuestion2() {
-        $(".question").text(data.question2[0]);
-        $(".q1").text(data.question2[1]);
-        $(".q2").text(data.question2[2]);
-        $(".q3").text(data.question2[3]);
-        $(".q4").text(data.question2[4]);
-    };
-    function setQuestion3() {
-        $(".question").text(data.question3[0]);
-        $(".q1").text(data.question3[1]);
-        $(".q2").text(data.question3[2]);
-        $(".q3").text(data.question3[3]);
-        $(".q4").text(data.question3[4]);
-    };
-    function setQuestion4() {
-        $(".question").text(data.question4[0]);
-        $(".q1").text(data.question4[1]);
-        $(".q2").text(data.question4[2]);
-        $(".q3").text(data.question4[3]);
-        $(".q4").text(data.question4[4]);
-    };
     function resetPage() {
+        displayQuestion(startData);
+        clearInterval(intervalId);
         timerCounter = 10;
         timerOn = false;
-        clearInterval(intervalId);
         $(".actualTimer").text(timerCounter);
-        $(".question").text(data.startData[0]);
-        $(".q1").text(data.startData[1]);
-        $(".q2").text(data.startData[2]);
-        $(".q3").text(data.startData[3]);
-        $(".q4").text(data.startData[4]);
+        $(".answer").empty();
+    }
+
+    function displayQuestion(questionData) {
+        // printing the information from data to the page
+        $(".question").text(questionData[0]);
+        $(".q1").text(questionData[1]);
+        $(".q2").text(questionData[2]);
+        $(".q3").text(questionData[3]);
+        $(".q4").text(questionData[4]);
     };
+
+    $(".actualTimer").text(timerCounter);
     // I'm hoping this will work and compare the user guesses to correct answers
     function endGame() {
-        for (var i = 0; i < userGuesses; i++) {
-            var j = 0;
-            var correctGuesses = 0;
-            var wrongGuesses = 0;
-            if (userGuesses[i] == correctAnswers[j]) {
-                correctGuesses++;
-            }
-            else if (userGuesses[i] != correctAnswers[j]) {
-                wrongGuesses++;
-            };
-            j++;
-        };
-    };
+        clearInterval(intervalId);
+        timerOn = false;
+        $(".answer").text('game done');
+    }
     //start the game
     function startGame() {
-        var questionCount = {
-            question1: setQuestion1(),
-            question2: setQuestion2(),
-            question3: setQuestion3(),
-            question4: setQuestion4(),
-        };
-        for (var i=0; i < questionCount.length; i++) {
-            gameTimer(questionCount[i]);
-        };
-        endGame();
+        answersRight = 0;
+        answersWrong = 0;
+        questionCounter = 0;
+        startNewQuestion();
+        gameTimer();
     };
-    // this is to run the timer for 10 seconds each question, and to gather user
-    // input at the end of those 10 seconds
+    // this is to set a function to run every second
     function gameTimer() {
         if (timerOn == false) {
-            intervalId = setInterval(timerPrinter, 1000);
+            intervalId = setInterval(timer, 100);
             timerOn = true;
         };
     };
-    // this is to actually print the timer numbers to the screen
-    function timerPrinter() {
-        $(".actualTimer").text(timerCounter);
+    // this is to check the point we're 'at' in the game, displaying answers, showing questions,
+    // what question we're on, etc.
+    function timer() {
         timerCounter--;
-        setTimeout(function () {
-            dataGrab();
-        }, 10000);
+        if (timerCounter === 0) {
+            if (showingAnswer) {
+                if (questionCounter === data.length -1) {
+                    endGame();
+                }
+                else {
+                questionCounter++;
+                startNewQuestion();
+                };
+            }
+            else {
+                showAnswer();
+            };
+        };
+        $(".actualTimer").text(timerCounter);
     };
     // this is to gather user data for each question
     function dataGrab() {
-        console.log($('input[name=answers]:checked').val());
-        userGuesses.push($('input[name=answers]:checked').val());
-        console.log(userGuesses);
-    }
+        userGuess = $(':radio[name=answers]').val();
+    };
+    function startNewQuestion() {
+        showingAnswer = false;
+        $(".answer").empty();
+        $(".rightORWrong").empty();
+        var questionWereOn = data[questionCounter];
+        displayQuestion(questionWereOn);
+        timerCounter = 10;
+    };
+
+    function showAnswer() {
+        // this is a lot.
+        // so answerindex is = to the list of rightanswers, at the point that questioncounter is at.
+        // so question 1 is displayed, questionCounter = 1, so answerIndex is looking at 
+        // correctAnswers array, at the point of questionCounter.
+        var answerIndex = correctAnswers[questionCounter]
+        // answerCheck = data, and we're using questionCounter to iterate through data.
+        // and to make sure we see the correct answers, we're looking at the index of the right 
+        // answer. this line was by far the hardest thing to wrap my head around, and I still
+        // have a hard time with it.
+        var answerCheck = data[questionCounter][answerIndex];
+        //  this userCheck is compared to answerCheck, and if they're === then you display 'right'
+        // and if they're not, display 'wrong'
+
+        // var userCheck = data[questionCounter][userGuess];
+        // $(".question-box").empty();
+        dataGrab();
+        console.log(answerIndex);
+        console.log(userGuessInterger);
+        if (userGuessInterger === answerIndex) {
+            $(".rightORWrong").text("You guessed Right!");
+            answersRight++;
+            console.log("right: " + answersRight);
+        }
+        else if (userGuessInterger !== answerIndex) {
+            $(".rightORWrong").text("You guessed Wrong!");
+            answersWrong++;
+            console.log("wrong: " + answersWrong);
+        };
+        // gather user data before displaying answer, to make sure they can't switch
+        timerCounter = 300;
+        showingAnswer = true;
+        $(".answer").text(answerCheck);
+        // TODO check if their answer was correct, and print out either correct or incorrect
+    };
     // click events
     $("#startButton").on("click", startGame);
     $("#resetButton").on("click", resetPage);
-
-
 });
